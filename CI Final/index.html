@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="paper-full.js"></script>
+        <script type="text/paperscript" canvas="canvas">
+            tool.minDistance = 10;
+            tool.maxDistance = 20;
+            var path;
+            function onMouseMove(event) {
+                path = new Path();
+                path.strokeColor = {
+                    hue: Math.random() * 180,
+                    saturation: 1,
+                    brightness: 0
+
+                };
+                path.fillColor = {
+                    hue: Math.random() * 320,
+                    saturation: 1,
+                    brightness: 1
+                };
+                path.add(event.point);
+
+                var step = event.delta / 2;
+                step.angle += 90;
+                
+                var top = event.middlePoint + step;
+                var bottom = event.middlePoint - step;
+                
+                path.add(top);
+                path.insert(0, bottom);
+                path.closed = true;
+                path.smooth()
+                path.add(event.point);
+            }
+
+
+        </script>
+    </head>
+    <body>
+        <canvas id="canvas" resize></canvas>
+    </body>
+</html>
